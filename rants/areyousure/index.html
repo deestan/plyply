@@ -1,0 +1,92 @@
+<!doctype html>
+<link type=text/css rel=stylesheet href=index.css>
+<link type=image/vnd.microsoft.icon rel=icon href=/favicon.ico>
+<script src=areyousure.js type=text/javascript></script>
+<title>Are You Sure You Want to View This Page?</title>
+<h1>I am sick of confirmation dialogs</h1>
+<wall-of-shame>
+ <figure>
+  <img src=from-some-random-website.png alt="Are You Sure You Wish To Delete This Item?">
+  <figcaption>"Yada-yada-ya. Press ENTER to continue working."</figcaption>
+ </figure>
+</wall-of-shame>
+<rant>
+ <h2>Nobody reads them</h2>
+ Confirmation dialogs train users to instantly hit the OK button whenever they
+ see it, like a game of whack-a-mole.  This is because they always
+ <em>really</em> ask "press this button to do whatever it was you wanted to do".
+ <h2>They ask inane questions</h2>
+ Even in cases where there is low chance of the user performing an operation by
+ accident, and the consequences of that operation would at any rate be easily
+ reversible, popup confirmation dialogs are used.
+ <table>
+  <tr>
+   <td>User:</td>
+   <td><computery-text>File > Servers > bob > Connect</computery-text></td>
+  </tr>
+  <tr>
+   <td>Program:</td>
+   <td>WARNING! Are you sure you want to connect to bob?</td>
+  </tr>
+  <tr>
+   <td>User:</td>
+   <td>Oops! No, I really wanted to print a document!  Thank <strong>a god</strong>
+       you saved me from accidentally connecting to my file server.</td>
+  </tr>
+ </table>
+</rant>
+<rant>
+ <h2>This is not a fresh insight</h2>
+ People have been saying this for years. With eloquent writing, pretty illustrations,
+ and large amounts of detailed critique, confirmation dialogs have been deemed
+ <a href=http://www.codinghorror.com/blog/2006/04/windows-vista-security-through-endless-warning-dialogs.html>frustrating</a>,
+ <a href=http://imlocation.wordpress.com/2007/07/10/fact-warning-and-confirmation-dialogs-do-not-work>pointless</a>,
+ and
+ <a href=http://www.philweber.com/articles/why_message_boxes_are_evil.htm>evil</a>.
+ So why won't they <diediedie>die</diediedie>?
+</rant>
+<call-to-action>
+ <h2>How can we get rid of this nonsense?</h2>
+ The biggest problem is that <strong>they are everywhere</strong>. It's an accidental
+ industry standard. Developers are used to seeing these dialogs all over the
+ place, and think nothing of adding them to their own programs whenever they
+ are unsure about something.
+ <h2>We need to make everyone sick of them</h2>
+ <p>
+  My proposed solution is simple: Shove the blasted confirmation dialogs so far
+  down the throat of every developer in the world that they will forevermore
+  retch just from <strong>thinking</strong> about the things.
+ </p>
+ <p>
+  Windows programs are by far the biggest problem area, so I've started there.
+  <strong>I have created a small program that every 10-40 minutes throws up the
+  following focus-stealing dialog:</strong>
+ </p>
+ <figure>
+  <img alt="WARNING! Are You Sure? OK CANCEL" src=ays.png onclick="alert('Nope! Chuck Testa.');">
+  <figcaption>
+   This was the crummiest, most annoying dialog I was able to make:
+   It is ugly, it has an excessive but uninformative title, it provides no
+   context, and the available buttons aren't semantically valid answers to
+   the stated question.
+   <wistful>Yet it is a completely average, run-of-the-mill confirmation dialog.</wistful>
+  </figcaption>
+ </figure>
+ <h2>You can help!</h2>
+ <p>
+  <a href=AreYouSure.exe type=application/x-msdownload>Download</a>
+  the program
+  (or the <a href=AreYouSure.sln.zip type=application/zip>source code</a>),
+  put it on a usb stick, and
+  start it up on your computer, your colleagues' computers, your friends'
+  computers,
+  <jk-please-dont-its-illegal>voting machines</jk-please-dont-its-illegal>,
+  and every piece of hardware you come across.
+ </p>
+ <p>
+  They'll thank you in the long run.
+ </p>
+</call-to-action>
+<im-batman>
+ -Helge 2010-12-16
+</im-batman>

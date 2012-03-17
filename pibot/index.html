@@ -1,0 +1,148 @@
+<!doctype html>
+<!--
+     Experiments in continuation functions and HTML5 audio.
+                                                            -->
+<style type=text/css>
+body {
+ background: #142;
+ text-align: center;
+ font-size: 20px;
+ font-weight: bold;
+ font-family: monospace;
+ color: #ffc;
+}
+span {
+ display: inline-block;
+}
+img {
+ margin: auto;
+ display: block;
+ border: 0;
+}
+</style>
+<title>Pi Robot Loves You</title>
+<img src=pibot.png alt=pi-robot title="Everybody sing along!">
+<div id=subtitles></div>
+<audio type=audio/wav id=piisexactly src=piisexactly.wav>Your browser is too sad to play sounds.</audio>
+<audio type=audio/wav id=point src=point.wav></audio>
+<audio type=audio/wav id=pint src=pint.wav></audio>
+<audio type=audio/wav id=one src=one.wav></audio>
+<audio type=audio/wav id=won src=won.wav></audio>
+<audio type=audio/wav id=two src=two.wav></audio>
+<audio type=audio/wav id=too src=too.wav></audio>
+<audio type=audio/wav id=three src=three.wav></audio>
+<audio type=audio/wav id=tree src=tree.wav></audio>
+<audio type=audio/wav id=four src=four.wav></audio>
+<audio type=audio/wav id=fore src=fore.wav></audio>
+<audio type=audio/wav id=five src=five.wav></audio>
+<audio type=audio/wav id=six src=six.wav></audio>
+<audio type=audio/wav id=sex src=sex.wav></audio>
+<audio type=audio/wav id=seven src=seven.wav></audio>
+<audio type=audio/wav id=eight src=eight.wav></audio>
+<audio type=audio/wav id=hate src=hate.wav></audio>
+<audio type=audio/wav id=nine src=nine.wav></audio>
+<audio type=audio/wav id=zero src=zero.wav></audio>
+<audio type=audio/wav id=oh src=oh.wav></audio>
+<audio type=audio/wav id=yada src=yada.wav></audio>
+<script type=text/javascript>
+/*jslint: haha: lol*/
+
+var itementityframework = {
+ '.': ['point', 'pint'],
+ '0': ['zero', 'oh'],
+ '1': ['one', 'won'],
+ '2': ['two', 'too'],
+ '3': ['three', 'tree'],
+ '4': ['four', 'fore'],
+ '5': ['five'],
+ '6': ['six', 'sex'],
+ '7': ['seven'],
+ '8': ['eight', 'hate'],
+ '9': ['nine'],
+ 'yada': ['yada'],
+ '&#x3c0; is exactly: ': ['piisexactly']
+};
+for (var k in itementityframework) {
+ if (itementityframework.hasOwnProperty(k)) {
+  werds = itementityframework[k];
+  for (var i=0; i<werds.length; i++) {
+   werds[i] = document.getElementById(werds[i]);
+  }
+ }
+}
+function play(number) {
+ var cc = document.getElementById("subtitles");
+ var digit = document.createElement("span");
+ digit.innerHTML = number;
+ cc.appendChild(digit);
+ var werds = itementityframework[number];
+ var i = Math.floor(Math.random() * werds.length);
+ if (werds[i].getAttribute("data-hasPlayed")) {
+  try {
+   werds[i].currentTime = 0;
+  } catch(probablyInternetExplorer) {
+   probablyInternetExplorer.eatABowlOfDicks = true;
+  }
+ }
+ werds[i].play();
+ werds[i].setAttribute("data-hasPlayed", "yes");
+}
+
+// Adapted from the Java implementation at http://www.codecodex.com/wiki/Calculate_digits_of_pi
+var SCALE = 10000;
+var ARRINIT = 2000;
+var arr = [];
+var carry = 0;
+var digits = 30000;
+
+for (var i=0; i<=digits; i++)
+ arr[i] = ARRINIT;
+
+var DELAY = 550;
+
+function emitStr(emitFn, s, continuation) {
+ if (s.length == 0) {
+  continuation();
+ } else {
+  emitFn(s[0]);
+  setTimeout(function(){emitStr(emitFn, Array.prototype.slice.call(s, 1), continuation);}, DELAY);
+ }
+}
+
+function emitPi(emitFn) {
+ emitStr(emitFn, "3.", function(){emitDigits(emitFn);});
+}
+
+var counter = digits;
+var skipFirst = true;
+function emitDigits(emitFn) {
+ var sum = 0;
+ for (var j = counter; j > 0; j -= 1) {
+  sum = Math.floor(sum * j + SCALE * arr[j]);
+  arr[j] = Math.floor(sum % (j * 2 - 1));
+  sum = Math.floor(sum / (j * 2 - 1));
+ }
+ var rez = "0000" + Math.floor(carry + sum / SCALE);
+ carry = Math.floor(sum % SCALE);
+ var oot = Array.prototype.slice.call(rez, rez.length - 4);
+ if (skipFirst) {
+  skipFirst = false;
+  oot = Array.prototype.slice.call(oot, 1);
+ }
+ counter -= 14;
+ if (counter > 0)
+  emitStr(emitFn, oot, function(){emitDigits(emitFn);});
+ else
+  emitYada(emitFn);
+}
+function emitYada(emitFn) {
+ emitFn("yada");
+ setTimeout(function(){emitYada(emitFn);}, DELAY);
+}
+
+setTimeout(
+ function() {
+  play("&#x3c0; is exactly: ");
+  setTimeout(function(){emitPi(play);}, 1400);
+ }, 3000);
+</script>

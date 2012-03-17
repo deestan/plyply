@@ -1,0 +1,524 @@
+<!doctype html>
+<!--
+           _ 
+          /\) _   
+     _   / / (/\  
+    /\) ( Y)  \ \ 
+   / /   ""   (Y )
+  ( Y)  _      "" 
+   ""  (/\       _  
+        \ \     /\)
+        (Y )   / / 
+         ""   ( Y) 
+               ""  Krogg
+-->
+<title>Happy fun vroom vroom</title>
+<style type=text/css>
+#descriptor {
+ background: #feb;
+ border: 2px solid #764;
+ opacity: 0.8;
+ font-family: verdana;
+ font-size: 24px;
+ padding: 15px;
+ position: absolute;
+ right: 5px;
+ left: 5px;
+ top: 5px;
+ text-align: center;
+ z-index: 1;
+ visibility: hidden;
+}
+.techAnim.active {
+ border: 2px solid gold;
+}
+.techAnim {
+ cursor: help;
+ border: 2px solid brown;
+ width: 200px;
+ height: 200px;
+ margin: -1px;
+}
+.techAnim > canvas {
+ width: 100%;
+ height: 100%;
+}
+body {
+ background: #123;
+}
+</style>
+<script type=text/javascript>
+/* jslint haha: 8====D */
+// Metaballs
+function metaballs(target) {
+ var interval;
+ var runny = false;
+ var updateFn;
+
+ function run() {
+  if (runny) throw "already running";
+  interval = setInterval(updateFn, 50);
+ }
+
+ function stop() {
+  if (!runny) throw "not running";
+  clearInterval(interval);
+ }
+
+ function init(element) {
+  var threshold = 0.18;
+  var ctx = element.getContext('2d');
+  var w = ctx.canvas.width;
+  var h = ctx.canvas.height;
+  var cx = Math.floor(w/2);
+  var cy = Math.floor(h/2);
+  var imgData = ctx.getImageData(0, 0, w, h);
+  var pixels = imgData.data;
+  function mkBall(redPower, greenPower, bluePower, speedX, speedY) {
+   var posX = 0;
+   var posY = 0;
+   function calcX() {
+    var d = Math.cos(posX);
+    return cx + (d * cx * 0.8);
+   }
+   function calcY() {
+    var d = Math.sin(posY);
+    return cy + (d * cy * 0.9);
+   }
+   function mkDistFun(power) {
+    return function(x, y) {
+     var dx = x - calcX();
+     var dy = y - calcY();
+     return (1.0 / Math.sqrt(dx*dx + dy*dy)) * power;
+    }
+   }
+   return {
+    fs: [ mkDistFun(redPower), mkDistFun(greenPower), mkDistFun(bluePower) ],
+    tick: function() {
+     var max = Math.PI*2;
+     posX += speedX;
+     posY += speedY;
+     if (posX > max)
+      posX -= max * Math.floor(posX/max);
+     if (posY > max)
+      posY -= max * Math.floor(posY/max);
+    }
+   }
+  }
+
+  var balls = [ mkBall(2.0, 1.0, 0.3, 0.10, 0.21)
+              , mkBall(0.3, 2.0, 1.0, 0.21, 0.19)
+              , mkBall(1.0, 0.3, 2.0, 0.25, 0.13) ];
+  function update() {
+   var pos = 0, channel, y, x, i;
+   for (y=0; y<h; y++) for (x=0; x<w; x++) {
+    for (channel=0; channel<3; ++channel) {
+     var sum = 0;
+     for (i=0; i<balls.length; ++i) {
+      sum += balls[i].fs[channel](x, y);
+      if (sum > threshold)
+       pixels[pos + channel] = 0xff;
+      else
+       pixels[pos + channel] = 0x00;
+     }
+    }
+    pixels[pos + 3] = 0xff;
+    pos += 4;
+   }
+
+   for (i=0; i<balls.length; i++)
+    balls[i].tick();
+
+   ctx.putImageData(imgData, 0, 0);
+  }
+
+  return update;
+ }
+
+ updateFn = init(target);
+ run();
+}
+</script>
+<script type=text/javascript>
+// Langton's Ant
+function langton(target) {
+
+ var interval;
+ var runny = false;
+ var updateFn;
+
+ function run() {
+  if (runny) throw "already running";
+  interval = setInterval(updateFn, 20);
+ }
+
+ function stop() {
+  if (!runny) throw "not running";
+  clearInterval(interval);
+ }
+
+ function init(element) {
+  var ctx = element.getContext('2d');
+  var w = ctx.canvas.width;
+  var h = ctx.canvas.height;
+  var imgData = ctx.getImageData(0, 0, w, h);
+  var pixels = imgData.data;
+  var BLACK = [0x00,0x00,0x00,0xff];
+  var WHITE = [0xff,0xff,0xff,0xff];
+  var ANT   = [0xff,0x00,0x00,0xff];
+  var currentColor = WHITE;
+  var x = Math.floor(w/2);
+  var y = Math.floor(h/2);
+  var compassX = [ 0,  1,  0, -1];
+  var compassY = [-1,  0,  1,  0];
+  var heading = 0;
+  function get(x, y) {
+   var o = y*w*4 + x*4;
+   return [ pixels[o+0]
+          , pixels[o+1]
+          , pixels[o+2]
+          , pixels[o+3] ];
+  }
+  function put(x, y, color) {
+   var o = y*w*4 + x*4;
+   var i;
+   for (i=0; i<4; ++i)
+    pixels[o+i] = color[i];
+  }
+  function is(c1, c2) {
+   var i;
+   for (i=0; i<4; ++i)
+    if (c1[i] != c2[i])
+     return false;
+   return true;
+  }
+  function clearField() {
+   var i;
+   for (i=0; i<w*h*4; i+=4) {
+    pixels[i+0]=0x00;
+    pixels[i+1]=0x00;
+    pixels[i+2]=0x00;
+    pixels[i+3]=0xff;
+   }
+   ctx.putImageData(imgData, 0, 0);
+  }
+  function tick() {
+   put(x, y, currentColor);
+   x += compassX[heading];
+   if (x>=w) x=0;
+   if (x<0) x=w-1;
+   y += compassY[heading];
+   if (y>=h) y=0;
+   if (y<0) y=h-1;
+   if (is(get(x, y), BLACK)) {
+    currentColor = WHITE;
+    if (++heading > 3)
+     heading = 0;
+   } else {
+    currentColor = BLACK;
+    if (--heading < 0)
+     heading = 3;
+   }
+   put(x, y, ANT);
+  }
+  function update() {
+   tick();
+   ctx.putImageData(imgData, 0, 0);
+  }
+  clearField();
+  put(x, y, ANT);
+
+  return update;
+ }
+
+ updateFn = init(target);
+ run();
+}
+</script>
+<script>
+// Le Art
+function leArt(target) {
+ var interval;
+ var runny;
+ var updateFn;
+
+ function run() {
+  if (runny) throw "already running";
+  interval = setInterval(updateFn, 15000);
+ }
+
+ function stop() {
+  if (!runny) throw "not running";
+  clearInterval(interval);
+ }
+
+ function init(element) {
+  var ctx = element.getContext('2d');
+  var w = ctx.canvas.width;
+  var h = ctx.canvas.height;
+  ctx.font = "italic 15px Georgia";
+  ctx.textAlign = "right";
+  ctx.textBasline = "bottom";
+  ctx.strokeStyle = "white";
+  function clearField() {
+   ctx.fillStyle = "black";
+   ctx.fillRect(0, 0, w, h);
+  }
+  function update() {
+   clearField();
+   // Fart some art
+   ctx.fillStyle = "gold";
+   ctx.beginPath();
+   function rx() { return w * 0.1 + Math.random() * w * 0.8; }
+   function ry() { return h * 0.1 + Math.random() * h * 0.8; }
+   ctx.moveTo(rx(), ry());
+   for (var i=0; i<5; i++)
+    ctx.bezierCurveTo(rx(), ry(), rx(), ry(), rx(), ry());
+   ctx.fill();
+   // Signature
+   var sigs = [ "Le Art"
+              , "Bezier"
+              , "Pretentious"
+              , "Impressionist"
+              , "Artsy"
+              , "Postmodern"
+              , "Premodern"
+              , "Abstract"
+              , "Balls" ];
+   var sig = sigs[Math.floor(Math.random() * sigs.length)];
+   ctx.strokeText(sig, w - 5, h - 5);
+  }
+
+  return update;
+ }
+
+ updateFn = init(target);
+ updateFn();
+ run();
+}
+</script>
+<script>
+// Diamond-Square heightmap per color channel
+function plasma(target) {
+ var interval;
+ var runny;
+ var updateFn;
+
+ function run() {
+  if (runny) throw "already running";
+  updateFn();
+  interval = setInterval(updateFn, 3100);
+ }
+
+ function stop() {
+  if (!runny) throw "not running";
+  clearInterval(interval);
+ }
+
+ function init(element) {
+  var ctx = element.getContext('2d');
+  var w = ctx.canvas.width;
+  var h = ctx.canvas.height;
+  var imgData = ctx.getImageData(0, 0, w, h);
+  var pixels = imgData.data;
+
+  for (i=0; i<w*h*4; i+=1)
+   pixels[i] = 0xff;
+
+  function update() {
+   function r() { return Math.floor(Math.random() * 256); }
+   function pos(x,y,c) { return 4 * (w * y + x) + c; }
+   function render(x1, y1, x2, y2, channel, depth) {
+    if ((x2 - x1) + (y2 - y1) < 3) return;
+
+    var c00 = pixels[pos(x1,y1,channel)];
+    var c10 = pixels[pos(x2,y1,channel)];
+    var c01 = pixels[pos(x1,y2,channel)];
+    var c11 = pixels[pos(x2,y2,channel)];
+
+    var cm = (c00 + c10 + c01 + c11) / 4;
+    cm += (Math.random() - 0.5) * (200 / (depth + 1));
+    if (cm < 0) cm = 0;
+    if (cm > 255) cm = 255;
+    cm = Math.floor(cm);
+
+    var mx = Math.floor((x2 - x1) / 2) + x1;
+    var my = Math.floor((y2 - y1) / 2) + y1;
+    pixels[pos(mx, y1, channel)] = Math.floor((c00 + c10) / 2);
+    pixels[pos(x1, my, channel)] = Math.floor((c00 + c01) / 2);
+    pixels[pos(mx, y2, channel)] = Math.floor((c01 + c11) / 2);
+    pixels[pos(x2, my, channel)] = Math.floor((c10 + c11) / 2);
+    
+    if ((x2 - x1 > 1) && (y2 - y1 > 1))
+     pixels[pos(mx, my, channel)] = cm;
+
+    render(x1, y1, mx, my, channel, depth + 1);
+    render(mx, y1, x2, my, channel, depth + 1);
+    render(x1, my, mx, y2, channel, depth + 1);
+    render(mx, my, x2, y2, channel, depth + 1);
+   }
+   var i;
+   for (i=0; i<3; i++) {
+    pixels[pos(  0,  0,i)] = r();
+    pixels[pos(w-1,  0,i)] = r();
+    pixels[pos(  0,h-1,i)] = r();
+    pixels[pos(w-1,h-1,i)] = r();
+    render(0, 0, w-1, h-1, i, 0);
+   }
+   ctx.putImageData(imgData, 0, 0);
+  }
+
+  return update;
+ }
+
+ updateFn = init(target);
+ run();
+}
+</script>
+<script>
+// Floatey movey
+function floateyMovey(targetClass, descriptor) {
+ function mkSprite(element, dir) {
+  element.style.position = "absolute";
+  var maxX;
+  var maxY;
+
+  function calcBounds() {
+   var bw = innerWidth;
+   var bh = innerHeight;
+   maxX = bw - element.getBoundingClientRect().width;
+   maxY = bh - element.getBoundingClientRect().height;
+  }
+
+  calcBounds();
+
+  var x = Math.random() * maxX;
+  var y = Math.random() * maxY;
+  var dx = Math.cos(dir);
+  var dy = Math.sin(dir);
+  var speed = 3;
+  function updatePos() {
+   element.style.top = Math.floor(y) + "px";
+   element.style.left = Math.floor(x) + "px";
+  }
+
+  function aimForTheCorner(ifYouAre) {
+   if (element != ifYouAre) return;
+   var cx = 0;
+   var cy = 0;
+   if (maxX - x < x) cx = maxX - 1;
+   if (maxY - y < y) cy = maxY - 1;
+   dx = cx - x;
+   dy = cy - y;
+   var d = Math.sqrt(dx*dx + dy*dy);
+   if (d < 1) {
+    var newDir = Math.random() * Math.PI * 2;
+    dx = Math.cos(newDir);
+    dy = Math.sin(newDir);
+   } else {
+    dx /= d;
+    dy /= d;
+   }
+  }
+
+  function tick() {
+   x += dx * speed;
+   if (x < 0 || x >= maxX) {
+    dx *= -1;
+    if (x < 0) x = 0;
+    if (x >= maxX) x = maxX - 1;
+   }
+   y += dy * speed;
+   if (y < 0 || y >= maxY) {
+    dy *= -1;
+    if (y < 0) y = 0;
+    if (y >= maxY) y = maxY - 1;
+   }
+   updatePos();
+  }
+  return { tick: tick
+         , handleResize: calcBounds
+         , aimForTheCorner: aimForTheCorner };
+ }
+
+ var targets = document.getElementsByClassName(targetClass);
+
+ var hideTimeout = null;
+ function elementTwiceMoused(evt) {
+  var elem = evt.target;
+  while (elem && !elem.getAttribute("data-title"))
+   elem = elem.parentElement;
+  for (var i=0; i<sprites.length; i++)
+   sprites[i].aimForTheCorner(elem);
+ }
+ function elementMoused(evt) {
+  function clearActive() {
+   var i;
+   for (i=0; i<targets.length; i++)
+    targets[i].className = targets[i].className.replace(/active/, '').trim();
+  }
+  var elem = evt.target;
+  while (elem && !elem.getAttribute("data-title"))
+   elem = elem.parentElement;
+  if (!elem) return;
+  descriptor.innerHTML = elem.getAttribute("data-title");
+  descriptor.style.visibility = "visible";
+  clearActive();
+  elem.className += " active";
+  if (hideTimeout != null)
+   clearTimeout(hideTimeout);
+  hideTimeout = setTimeout(
+   function() {
+    descriptor.style.visibility = "hidden";
+    clearActive();
+   },
+   5000
+  );
+ }
+
+ var sprites = [];
+ var originAngle = Math.random() * Math.PI * 2;
+ for (var i=0; i<targets.length; i++) {
+  targets[i].onmousedown = elementMoused;
+  targets[i].ondblclick = elementTwiceMoused;
+  sprites.push(mkSprite(targets[i], originAngle + i * 0.5));
+ }
+
+ var interval = setInterval(
+  function() {
+   for (var i=0; i<sprites.length; i++)
+    sprites[i].tick();
+  },
+  50
+ );
+
+ window.onresize = function() {
+  for (var i=0; i<sprites.length; i++)
+   sprites[i].handleResize();
+ };
+}
+</script>
+<script type=text/javascript>
+function onLoad() {
+ metaballs(document.getElementById("metaballs"));
+ langton(document.getElementById("langton"));
+ leArt(document.getElementById("le-art"));
+ plasma(document.getElementById("plasma"));
+ floateyMovey("techAnim", document.getElementById("descriptor"));
+}
+</script>
+<body onload=onLoad();>
+<div id=descriptor></div>
+<div class=techAnim data-title="Metaballs with different weights per color channel">
+ <canvas id=metaballs width=60 height=60></canvas>
+</div>
+<div class=techAnim data-title="Langton's Ant on a torus">
+ <canvas id=langton width=70 height=70></canvas>
+</div>
+<div class=techAnim data-title="Le Art d'Bezier">
+ <canvas id=le-art width=150 height=150></canvas>
+</div>
+<div class=techAnim data-title="Diamond Square heightmap per color channel">
+ <canvas id=plasma width=100 height=100></canvas>
+</div>
+</body>
