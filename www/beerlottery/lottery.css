@@ -1,6 +1,6 @@
 #players {
     width: 200px;
-    height: 100px;
+    min-height: 100px;
     background: #eeedea;
     float: left;
     margin: 0 0 10px 0;
