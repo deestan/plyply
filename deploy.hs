@@ -2,7 +2,7 @@
 
 import System.Directory
 import System.Process
-import List
+import Data.List
 
 main = do
     hazNginx <- doesFileExist "/etc/init.d/nginx"
