@@ -9,6 +9,7 @@ function createPlayers() {
   function trim(x) {
     return x.trim();
   }
+  var ROWHEIGHT = 90;
   var playerNames = playerInput.innerText.split("\n").map(trim).filter(trim);
   for (var i=0; i<players.length; i++) {
     var pi = players[i].img;
@@ -25,18 +26,18 @@ function createPlayers() {
       nameTag.innerText += " - " + playerNames[i];
     }
     nameTag.style.left = 0;
-    nameTag.style.top = players.length * 100 + 20;
+    nameTag.style.top = players.length * ROWHEIGHT + 20;
     arena.appendChild(nameTag);
     var player = document.createElement("img");
     player.src = "runner.gif";
     player.classList.add("runner");
     player.style.left = 0;
-    player.style.top = players.length * 100 + 10;
+    player.style.top = players.length * ROWHEIGHT;
     arena.appendChild(player);
     players.push({img: player, nameTag: nameTag,
                   left: 0, nextBound: 0, dx: 0});
   }
-  arena.style.height = players.length * 100 + "px";
+  arena.style.height = players.length * ROWHEIGHT + "px";
 }
 
 var running = null;
@@ -64,10 +65,19 @@ function race() {
     var p = players[i];
     if (p.left >= p.nextBound) {
       p.dx = randy.best.triangular(3, 8, 5);
+      p.img.src = randy.choice(["runner.gif", "runner2.gif", "runner3.gif"]);
       p.nextBound += 100;
     }
     var pastEnd = (p.left >= end);
     var pastFinish = (p.left >= goal);
+    if (pastEnd && !p.pastEndImage) {
+      p.img.src = "runner_finished.gif";
+      p.pastEndImage = true;
+    }
+    if (!pastEnd && p.pastEndImage) {
+      p.img.src = "runner.gif";
+      p.pastEndImage = false;
+    }
     p.left += p.dx * (pastFinish ? 0.5 : 1.0) * (pastEnd ? 0.0 : 1.0);
     p.img.style.left = p.left;
     if (p.left >= goal)
