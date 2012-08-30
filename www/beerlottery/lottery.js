@@ -47,14 +47,18 @@ function gogogo() {
   running = setInterval(race, 80);
 }
 
+var winner = null;
 function win(player) {
-  clearInterval(running);
+  if (winner) return;
+  winner = player;
   resetButton.disabled = false;
   player.nameTag.style.color = "#fd3";
+  player.nameTag.style.fontWeight = "bold";
 }
 
 function race() {
   var goal = arena.getBoundingClientRect().width - 70;
+  var end = goal + 20;
   var winners = [];
   for (var i=0; i<players.length; i++) {
     var p = players[i];
@@ -62,11 +66,13 @@ function race() {
       p.dx = randy.best.triangular(3, 8, 5);
       p.nextBound += 100;
     }
-    p.left += p.dx;
+    if (p.left >= end)
+      p.dx = 0;
+    var pastFinish = (p.left >= goal);
+    p.left += p.dx * (pastFinish ? 0.5 : 1.0);
     p.img.style.left = p.left;
-    if (p.left >= goal) {
+    if (p.left >= goal)
       winners.push(p);
-    }
   }
   if (winners.length > 0) {
     win(randy.best.choice(winners));
@@ -74,12 +80,16 @@ function race() {
 }
 
 function reset() {
+  winner = null;
   playerInput.contentEditable = "true";
   playerInput.onkeydown = function () {
     setTimeout(createPlayers, 0);
   }
   goButton.disabled = false;
   createPlayers();
+  resetButton.disabled = true;
+  if (running)
+    clearInterval(running);
 }
 
 reset();
