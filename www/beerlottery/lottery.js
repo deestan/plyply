@@ -66,10 +66,9 @@ function race() {
       p.dx = randy.best.triangular(3, 8, 5);
       p.nextBound += 100;
     }
-    if (p.left >= end)
-      p.dx = 0;
+    var pastEnd = (p.left >= end);
     var pastFinish = (p.left >= goal);
-    p.left += p.dx * (pastFinish ? 0.5 : 1.0);
+    p.left += p.dx * (pastFinish ? 0.5 : 1.0) * (pastEnd ? 0.0 : 1.0);
     p.img.style.left = p.left;
     if (p.left >= goal)
       winners.push(p);
