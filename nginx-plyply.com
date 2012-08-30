@@ -1,7 +1,7 @@
 server {
   listen 80;
   server_name plyply.com;
-  rewrite ^ http://www.plyply.com$request.uri?;
+  rewrite ^ http://www.plyply.com$request_uri?;
 }
 
 server {
