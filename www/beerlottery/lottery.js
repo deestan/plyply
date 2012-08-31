@@ -10,7 +10,12 @@ function createPlayers() {
     return x.trim();
   }
   var ROWHEIGHT = 90;
-  var playerNames = playerInput.innerText.split("\n").map(trim).filter(trim);
+  var playerNames = _.chain(playerInput.innerHTML
+                            .replace(/<[^>]*>/g, "\n")
+                            .split("\n"))
+    .map(trim)
+    .filter(trim)
+    .value();
   for (var i=0; i<players.length; i++) {
     var pi = players[i].img;
     pi.parentElement.removeChild(pi);
