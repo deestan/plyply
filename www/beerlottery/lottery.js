@@ -63,7 +63,8 @@ function win(player) {
 }
 
 function race() {
-  var goal = arena.getBoundingClientRect().width - 70;
+  var arenaBounds = arena.getBoundingClientRect();
+  var goal = (arenaBounds.right - arenaBounds.left) - 70;
   var end = goal + 20;
   var winners = [];
   for (var i=0; i<players.length; i++) {
