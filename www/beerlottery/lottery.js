@@ -7,7 +7,7 @@ var players = [];
 
 function createPlayers() {
   function trim(x) {
-    return x.trim();
+    return x.replace(/^\s*/, "").replace(/\s*$/, "");
   }
   var ROWHEIGHT = 90;
   var playerNames = _.chain(playerInput.innerHTML
