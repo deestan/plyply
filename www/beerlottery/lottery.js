@@ -25,7 +25,7 @@ function createPlayers() {
   players = [];
   for (var i=0; i<playerNames.length; i++) {
     var nameTag = document.createElement("span");
-    nameTag.classList.add("nametag");
+    nameTag.className = "nametag";
     nameTag.innerText = playerNames[i];
     for (var j=0; j<100; j++) {
       nameTag.innerText += " - " + playerNames[i];
@@ -35,7 +35,7 @@ function createPlayers() {
     arena.appendChild(nameTag);
     var player = document.createElement("img");
     player.src = "runner.gif";
-    player.classList.add("runner");
+    player.className = "runner";
     player.style.left = 0;
     player.style.top = players.length * ROWHEIGHT;
     arena.appendChild(player);
