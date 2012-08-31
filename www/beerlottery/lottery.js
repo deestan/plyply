@@ -34,7 +34,7 @@ function createPlayers() {
     nameTag.style.top = players.length * ROWHEIGHT + 20;
     arena.appendChild(nameTag);
     var player = document.createElement("img");
-    player.src = "runner.gif";
+    player.src = "runner_ready.gif";
     player.className = "runner";
     player.style.left = 0;
     player.style.top = players.length * ROWHEIGHT;
@@ -77,7 +77,11 @@ function race() {
     var pastEnd = (p.left >= end);
     var pastFinish = (p.left >= goal);
     if (pastEnd && !p.pastEndImage) {
-      p.img.src = "runner_finished.gif";
+      if (p == winner) {
+          p.img.src = "runner_win.gif";
+      } else {
+        p.img.src = "runner_finished.gif";
+      }
       p.pastEndImage = true;
     }
     if (!pastEnd && p.pastEndImage) {
