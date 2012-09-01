@@ -29,7 +29,7 @@ function createPlayers() {
     var textContent = playerNames[i];
     for (var j=0; j<100; j++)
       textContent += " - " + playerNames[i];
-    nameTag.textContent = textContent;
+    nameTag.innerHTML = textContent;
     nameTag.style.left = 0;
     nameTag.style.top = players.length * ROWHEIGHT + 20;
     arena.appendChild(nameTag);
