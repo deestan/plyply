@@ -78,7 +78,7 @@ function race() {
     if (p.left >= p.nextAnimBound) {
       p.img.src = randy.choice(["runner.gif", "runner2.gif",
                                 "runner3.gif", "runner4.gif",
-                                "runner5.gif"]);
+                                "runner5.gif", "runner6.gif"]);
       p.nextAnimBound += randy.randInt(150, 300);
     }
     var pastEnd = (p.left >= end);
