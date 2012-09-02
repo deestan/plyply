@@ -71,7 +71,8 @@ function race() {
     var p = players[i];
     if (p.left >= p.nextBound) {
       p.dx = randy.best.triangular(3, 8, 5);
-      p.img.src = randy.choice(["runner.gif", "runner2.gif", "runner3.gif"]);
+      p.img.src = randy.choice(["runner.gif", "runner2.gif",
+                                "runner3.gif", "runner4.gif"]);
       p.nextBound += 100;
     }
     var pastEnd = (p.left >= end);
