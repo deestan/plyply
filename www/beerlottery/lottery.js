@@ -40,7 +40,9 @@ function createPlayers() {
     player.style.top = players.length * ROWHEIGHT;
     arena.appendChild(player);
     players.push({img: player, nameTag: nameTag,
-                  left: 0, nextBound: 0, dx: 0});
+                  left: 0, nextAnimBound: 0,
+                  nextSpeedBound: 0,
+                  dx: 0});
   }
   arena.style.height = players.length * ROWHEIGHT + "px";
 }
@@ -69,11 +71,14 @@ function race() {
   var winners = [];
   for (var i=0; i<players.length; i++) {
     var p = players[i];
-    if (p.left >= p.nextBound) {
+    if (p.left >= p.nextSpeedBound) {
       p.dx = randy.best.triangular(3, 8, 5);
+      p.nextSpeedBound += 100;
+    }
+    if (p.left >= p.nextAnimBound) {
       p.img.src = randy.choice(["runner.gif", "runner2.gif",
                                 "runner3.gif", "runner4.gif"]);
-      p.nextBound += 100;
+      p.nextAnimBound += randy.randInt(150, 300);
     }
     var pastEnd = (p.left >= end);
     var pastFinish = (p.left >= goal);
