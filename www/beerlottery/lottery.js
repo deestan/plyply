@@ -77,10 +77,13 @@ function race() {
       p.nextSpeedBound += 100;
     }
     if (p.left >= p.nextAnimBound) {
-      p.img.src = randy.choice(["runner1.gif", "runner2.gif",
-                                "runner3.gif", "runner4.gif",
-                                "runner5.gif", "runner6.gif",
-                                "runner7.gif"]);
+      p.img.src = randy.choice(["runner1.gif", "runner1.gif", "runner1.gif",
+                                "runner2.gif",
+                                "runner3.gif", "runner3.gif", "runner3.gif",
+                                "runner4.gif",
+                                "runner5.gif", "runner5.gif",
+                                "runner6.gif", "runner6.gif",
+                                "runner7.gif", "runner7.gif"]);
       p.nextAnimBound += randy.randInt(150, 300);
     }
     var pastEnd = (p.left >= end);
