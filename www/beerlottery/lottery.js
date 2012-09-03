@@ -11,6 +11,7 @@ function createPlayers() {
   }
   var ROWHEIGHT = 90;
   var playerNames = _.chain(playerInput.innerHTML
+                            .replace(/&nbsp;/g, " ")
                             .replace(/<[^>]*>/g, "\n")
                             .split("\n"))
     .map(trim)
