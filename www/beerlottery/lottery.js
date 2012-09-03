@@ -1,7 +1,8 @@
-var arena = document.getElementById("arena");
-var playerInput = document.getElementById("players");
-var goButton = document.getElementById("run");
-var resetButton = document.getElementById("reset");
+// These will be set by the document.onload handler.
+var arena;
+var playerInput;
+var goButton;
+var resetButton;
 
 var players = [];
 
@@ -12,6 +13,7 @@ function createPlayers() {
   var ROWHEIGHT = 80;
   var playerNames = _.chain(playerInput.innerHTML
                             .replace(/&nbsp;/g, " ")
+                            .replace(/,/g, "\n")
                             .replace(/<[^>]*>/g, "\n")
                             .split("\n"))
     .map(trim)
@@ -123,6 +125,10 @@ function reset() {
     clearInterval(running);
 }
 
+arena = document.getElementById("arena");
+playerInput = document.getElementById("players");
+goButton = document.getElementById("run");
+resetButton = document.getElementById("reset");
 reset();
 goButton.onclick = gogogo;
 resetButton.onclick = reset;
