@@ -9,7 +9,7 @@ function createPlayers() {
   function trim(x) {
     return x.replace(/^\s*/, "").replace(/\s*$/, "");
   }
-  var ROWHEIGHT = 90;
+  var ROWHEIGHT = 80;
   var playerNames = _.chain(playerInput.innerHTML
                             .replace(/&nbsp;/g, " ")
                             .replace(/<[^>]*>/g, "\n")
@@ -32,13 +32,13 @@ function createPlayers() {
       textContent += " - " + playerNames[i];
     nameTag.innerHTML = textContent;
     nameTag.style.left = 0;
-    nameTag.style.top = players.length * ROWHEIGHT + 20;
+    nameTag.style.top = players.length * ROWHEIGHT + 10;
     arena.appendChild(nameTag);
     var player = document.createElement("img");
     player.src = "runner_ready.gif";
     player.className = "runner";
     player.style.left = 0;
-    player.style.top = players.length * ROWHEIGHT;
+    player.style.top = players.length * ROWHEIGHT - 5;
     arena.appendChild(player);
     players.push({img: player, nameTag: nameTag,
                   left: 0, nextAnimBound: 0,
