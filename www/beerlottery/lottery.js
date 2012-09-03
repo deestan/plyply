@@ -80,7 +80,7 @@ function race() {
       p.img.src = randy.choice(["runner1.gif", "runner2.gif",
                                 "runner3.gif", "runner4.gif",
                                 "runner5.gif", "runner6.gif",
-                                "runney7.gif"]);
+                                "runner7.gif"]);
       p.nextAnimBound += randy.randInt(150, 300);
     }
     var pastEnd = (p.left >= end);
@@ -94,7 +94,7 @@ function race() {
       p.pastEndImage = true;
     }
     if (!pastEnd && p.pastEndImage) {
-      p.img.src = "runner.gif";
+      p.nextAnimBound = p.left;
       p.pastEndImage = false;
     }
     p.left += p.dx * (pastFinish ? 0.5 : 1.0) * (pastEnd ? 0.0 : 1.0);
