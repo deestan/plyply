@@ -130,6 +130,7 @@ arena = document.getElementById("arena");
 playerInput = document.getElementById("players");
 goButton = document.getElementById("run");
 resetButton = document.getElementById("reset");
+hint = document.getElementById("hint");
 reset();
 goButton.onclick = gogogo;
 resetButton.onclick = reset;
