@@ -132,3 +132,6 @@ resetButton = document.getElementById("reset");
 reset();
 goButton.onclick = gogogo;
 resetButton.onclick = reset;
+playerInput.onclick = function () {
+  document.getElementById("hint").style.display = "none";
+}
