@@ -17,6 +17,7 @@ body {
 }
 
 #hint {
+    cursor: pointer;
     position: fixed;
     left: 200px;
     top: 5px;
