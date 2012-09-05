@@ -2,11 +2,13 @@
 <script src=randy.min.js></script>
 <script src=underscore-min.js></script>
 <title>Run stickman run!</title>
-<pre id=players contenteditable>
-player1<br>player2
-</pre>
-<button id=run>Go</button>
-<button id=reset disabled>Reset</button>
+<span id=players class="menu" contenteditable=true>
+  player1, player2
+</span>
+<button class="menu action" id=run>GO</button>
+<button class="menu action" id=reset disabled>NEW RUN</button>
+  </tr>
+</table>
 <div id=arena>
   <div id=arenaGoal></div>
 </div>
