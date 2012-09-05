@@ -3,6 +3,7 @@ var arena;
 var playerInput;
 var goButton;
 var resetButton;
+var hint;
 
 var players = [];
 
@@ -133,5 +134,13 @@ reset();
 goButton.onclick = gogogo;
 resetButton.onclick = reset;
 playerInput.onclick = function () {
-  document.getElementById("hint").style.display = "none";
+  hint.onclick = null;
+  hint.style.display = "none";
+}
+hint.onclick = function () {
+  hint.onclick = null;
+  hint.style.display = "none";
+  playerInput.focus();
+  var s = window.getSelection();
+  s.selectAllChildren(playerInput);
 }

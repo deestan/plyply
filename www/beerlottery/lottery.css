@@ -54,7 +54,7 @@ body {
 
 #players {
     width: 250px;
-    background: #bbb;
+    background: #999;
 }
 
 #players[contenteditable=true] {
