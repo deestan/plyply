@@ -93,7 +93,8 @@ function race() {
     var pastFinish = (p.left >= goal);
     if (pastEnd && !p.pastEndImage) {
       if (p == winner) {
-          p.img.src = "runner_win.gif";
+        p.img.src = randy.choice(["runner_win1.gif",
+                                  "runner_win2.gif"]);
       } else {
         p.img.src = "runner_finished.gif";
       }
