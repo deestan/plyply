@@ -133,8 +133,8 @@ goButton = document.getElementById("run");
 resetButton = document.getElementById("reset");
 hint = document.getElementById("hint");
 reset();
-goButton.onclick = gogogo;
-resetButton.onclick = reset;
+bindClickAndTouchEvent(goButton, gogogo);
+bindClickAndTouchEvent(resetButton, reset);
 playerInput.onclick = function () {
   hint.onclick = null;
   hint.style.display = "none";
@@ -145,4 +145,18 @@ hint.onclick = function () {
   playerInput.focus();
   var s = window.getSelection();
   s.selectAllChildren(playerInput);
+}
+
+function bindClickAndTouchEvent(el, action) {
+  var canFire = true;
+  function fire() {
+    if (!canFire)
+      return;
+    canFire = false;
+    setTimeout(function () { canFire = true; }, 2000);
+    action();
+  }
+  el.onclick = fire;
+  if (el.addEventListener)
+    el.addEventListener("touchstart", fire, false);
 }
