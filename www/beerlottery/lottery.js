@@ -64,7 +64,7 @@ function win(player) {
   if (winner) return;
   winner = player;
   resetButton.disabled = false;
-  player.nameTag.style.color = "#fd3";
+  player.nameTag.style.color = "#fb1";
   player.nameTag.style.fontWeight = "bold";
 }
 

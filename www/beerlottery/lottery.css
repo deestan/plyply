@@ -1,8 +1,8 @@
 body {
     margin: 0;
     padding: 4px;
-    background: #452;
-    background-image: url(stackofbriks.png);
+    background: #2b3741;
+    /* background-image: url(stackofbriks.png); */
     background-repeat: repeat;
     font-family: monospace;
 }
@@ -25,12 +25,12 @@ body {
 }
 
 #hint > .text {
-    background: #def;
-    color: #000;
+    background: #edeefe;
+    color: #222;
     font-size: 20px;
     padding: 5px;
     text-transform: uppercase;
-    border: 2px solid #012;
+    border: 2px solid #2b3741;
 }
 
 #hint > .arrow {
@@ -40,7 +40,7 @@ body {
     border-top: 12px solid transparent;
     border-bottom: 12px solid transparent;
     border-left: 12px solid transparent;
-    border-right: 12px solid #def;
+    border-right: 12px solid #edeefe;
 }
 
 #hint > .arrowBorder {
@@ -50,16 +50,16 @@ body {
     border-top: 13px solid transparent;
     border-bottom: 13px solid transparent;
     border-left: 13px solid transparent;
-    border-right: 13px solid #000;
+    border-right: 13px solid #2b3741;
 }
 
 #players {
     width: 250px;
-    background: #999;
+    background: #988072;
 }
 
 #players[contenteditable=true] {
-    background: #fffdfa;
+    background: #edeefe;
 }
 
 .action {
@@ -67,11 +67,13 @@ body {
     font-size: 16px;
     background: #6d4;
     border-color: #4b2;
+    color: #222;
 }
 
 button[disabled] {
     background: #d64;
     border-color: #b42;
+    color: #222;
 }
 
 img.runner, span.nametag {
@@ -81,7 +83,7 @@ img.runner, span.nametag {
 span.nametag {
     font-size: 60px;
     text-transform: uppercase;
-    color: #252;
+    color: #2b3741;
     width: 100000px;
 }
 
@@ -89,7 +91,7 @@ span.nametag {
     width: 100%;
     height: 0px;
     position: relative;
-    background: #3a2;
+    background: #818d01;
     overflow: hidden;
 }
 
@@ -98,7 +100,7 @@ span.nametag {
     right: 0;
     height: 100%;
     width: 50px;
-    border-left: 3px dotted red;
+    border-left: 3px dotted #dd2401;
 }
 
 canvas {
