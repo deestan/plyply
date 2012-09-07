@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 4px;
     background: #2b3741;
-    /* background-image: url(stackofbriks.png); */
+    background-image: url(stackofbriks.png);
     background-repeat: repeat;
     font-family: monospace;
 }
