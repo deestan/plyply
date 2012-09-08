@@ -139,17 +139,19 @@ playerInput.onclick = function () {
   hint.onclick = null;
   hint.style.display = "none";
 }
-hint.onclick = function () {
+bindClickAndTouchEvent(hint, function () {
   hint.onclick = null;
   hint.style.display = "none";
   playerInput.focus();
   var s = window.getSelection();
   s.selectAllChildren(playerInput);
-}
+});
 
 function bindClickAndTouchEvent(el, action) {
   var canFire = true;
   function fire() {
+    if (el.disabled)
+      return;
     if (!canFire)
       return;
     canFire = false;
