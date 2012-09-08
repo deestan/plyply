@@ -53,6 +53,7 @@ function createPlayers() {
 
 var running = null;
 function gogogo() {
+  hint.style.display = "none";
   playerInput.contentEditable = "false";
   playerInput.onkeydown = null;
   goButton.disabled = true;

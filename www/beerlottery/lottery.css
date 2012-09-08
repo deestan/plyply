@@ -19,8 +19,8 @@ body {
 #hint {
     cursor: pointer;
     position: fixed;
-    left: 200px;
-    top: 5px;
+    left: 10px;
+    top: 35px;
     overflow: visible;
 }
 
@@ -35,22 +35,22 @@ body {
 
 #hint > .arrow {
     position: fixed;
-    left: 178px;
-    top: 11px;
+    left: 20px;
+    top: 13px;
     border-top: 12px solid transparent;
-    border-bottom: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #edeefe;
     border-left: 12px solid transparent;
-    border-right: 12px solid #edeefe;
 }
 
 #hint > .arrowBorder {
     position: fixed;
-    left: 174px;
-    top: 10px;
+    left: 19px;
+    top: 9px;
     border-top: 13px solid transparent;
-    border-bottom: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-bottom: 13px solid #2b3741;
     border-left: 13px solid transparent;
-    border-right: 13px solid #2b3741;
 }
 
 #players {
