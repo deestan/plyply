@@ -12,7 +12,7 @@ function createPlayers() {
     return x.replace(/^\s*/, "").replace(/\s*$/, "");
   }
   var ROWHEIGHT = 80;
-  var playerNames = _.chain(playerInput.innerHTML
+  var playerNames = _.chain(playerInput.value
                             .replace(/&nbsp;/g, " ")
                             .replace(/,/g, "\n")
                             .replace(/<[^>]*>/g, "\n")
