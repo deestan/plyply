@@ -3,9 +3,11 @@ var arena;
 var playerInput;
 var goButton;
 var resetButton;
+var replayButton;
 var hint;
 
 var players = [];
+var rngStateAtStart;
 
 function createPlayers() {
   function trim(x) {
@@ -53,6 +55,9 @@ function createPlayers() {
 
 var running = null;
 function gogogo() {
+  rngStateAtStart = randy.getState();
+  if (arena.style.width == "100%")
+    arena.style.width = arena.clientWidth;
   hint.style.display = "none";
   playerInput.contentEditable = "false";
   playerInput.onkeydown = null;
@@ -65,8 +70,49 @@ function win(player) {
   if (winner) return;
   winner = player;
   resetButton.disabled = false;
+  replayButton.disabled = false;
   player.nameTag.style.color = "#fb1";
   player.nameTag.style.fontWeight = "bold";
+}
+
+function replayButtonClicked() {
+  var r = window.location.href;
+  var rm = /[&?]replay=/.exec(r);
+  if (rm) {
+    var cleanUrl = r.substring(0, rm.index);
+    window.location.href = cleanUrl;
+  } else {
+    createReplay();
+  }
+}
+
+function createReplay() {
+  var r = window.location.href;
+  var base = /([^?]*)/.exec(r)[1];
+  var replayData = { w: arena.style.width,
+                     p: playerInput.value,
+                     r: rngStateAtStart };
+  var replayStr = Base64.encode(JSON.stringify(replayData));
+  var replay = base + "?replay=" + replayStr;
+  window.location.href = replay;
+}
+
+function runReplay() {
+  var r = window.location.href;
+  var replayM = /[&?]replay=([^&]*)/.exec(r);
+  if (!replayM)
+    return;
+  var replayData = JSON.parse(Base64.decode(replayM[1]));
+  playerInput.value = replayData.p;
+  createPlayers();
+  var width = replayData.w;
+  randy.setState(replayData.r);
+  arena.style.width = width;
+  hint.style.display = "none";
+  playerInput.contentEditable = "false";
+  playerInput.onkeydown = null;
+  replayButton.innerHTML = "EXIT REPLAY";
+  replayButton.disabled = false;
 }
 
 function race() {
@@ -124,18 +170,23 @@ function reset() {
   goButton.disabled = false;
   createPlayers();
   resetButton.disabled = true;
+  replayButton.disabled = true;
   if (running)
     clearInterval(running);
+  arena.style.width = "100%";
+  runReplay();
 }
 
 arena = document.getElementById("arena");
 playerInput = document.getElementById("players");
 goButton = document.getElementById("run");
 resetButton = document.getElementById("reset");
+replayButton = document.getElementById("replay");
 hint = document.getElementById("hint");
 reset();
 bindClickAndTouchEvent(goButton, gogogo);
 bindClickAndTouchEvent(resetButton, reset);
+bindClickAndTouchEvent(replayButton, replayButtonClicked);
 playerInput.onclick = function () {
   hint.onclick = null;
   hint.style.display = "none";
