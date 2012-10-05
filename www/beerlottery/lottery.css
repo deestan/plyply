@@ -16,6 +16,45 @@ body {
     width: 100px;
 }
 
+@-webkit-keyframes blink {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+}
+@-moz-keyframes blink {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+}
+@-o-keyframes blink {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+}
+@keyframes blink {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+}
+
+.blink {
+    -webkit-animation: blink 1s infinite;
+    -webkit-animation-timing-function: cubic-bezier(1.0, 0, 0, 1.0);
+    -moz-animation: blink 1s infinite;
+    -moz-animation-timing-function: cubic-bezier(1.0, 0, 0, 1.0);
+    -o-animation: blink 1s infinite;
+    -o-animation-timing-function: cubic-bezier(1.0, 0, 0, 1.0);
+    animation: blink 1s infinite;
+    animation-timing-function: cubic-bezier(1.0, 0, 0, 1.0);
+}
+
+#R {
+    font-size: 120px;
+    color: #fff;
+    position: fixed;
+    right: 20px;
+    top: 0px;
+    margin: 0;
+    padding: 0;
+    display: none;
+}
+
 #hint {
     cursor: pointer;
     position: fixed;

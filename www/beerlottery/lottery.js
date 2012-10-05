@@ -113,6 +113,7 @@ function runReplay() {
   playerInput.onkeydown = null;
   replayButton.innerHTML = "EXIT REPLAY";
   replayButton.disabled = false;
+  document.getElementById("R").style.display = "block";
 }
 
 function race() {
