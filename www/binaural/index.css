@@ -1,0 +1,26 @@
+body {
+    font-family: verdana;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #222;
+    color: #adc;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 0;
+    margin-left: 10px;
+    width: 50px;
+    height: 30px;
+    cursor: pointer;
+    background: #6d4;
+    border-color: #4b2;
+    color: #222;
+}
+
+button[disabled] {
+    background: #d64;
+    border-color: #b42;
+    color: #222;
+}

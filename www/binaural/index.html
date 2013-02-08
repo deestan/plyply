@@ -1,0 +1,84 @@
+<!doctype html>
+<link rel=stylesheet type=text/css href=index.css>
+<audio id=hz7a preload=auto autobuffer>
+  <source src=hz_07_336-343.mp3 />
+  <source src=hz_07_336-343.ogg />
+</audio>
+<audio id=hz7b preload=auto autobuffer>
+  <source src=hz_07_336-343.mp3 />
+  <source src=hz_07_336-343.ogg />
+</audio>
+
+<title>Binaural Beats</title>
+<span>7Hz</span>
+<button onclick=start(this) id=a7>Start</button>
+<button onclick=stop(this) disabled id=b7>Stop</button>
+
+<script>
+var a = document.getElementById("hz7a");
+var b = document.getElementById("hz7b");
+a.volume = 0.0;
+b.volume = 0.0;
+
+var current = a;
+var other = b;
+var flipper = null;
+
+function fade(snd, from, to, ticks) {
+  var tick = 0;
+  ticks = ticks || 20;
+  var timer = null;
+  snd.volume = from;
+  function tickDown() {
+    tick += 1;
+    if (tick >= ticks)
+      clearTimeout(timer);
+    var vol = from + (to - from) * (tick / ticks);
+    snd.volume = vol;
+  }
+  timer = window.setInterval(tickDown, 1000 / ticks);
+}
+
+function flip() {
+  other.currentTime = 0.0;
+  fade(other, 0, 1);
+  var _current = current;
+  window.setTimeout(function () {
+    fade(_current, 1, 0);
+  }, 100);
+  other.play();
+  var tmp = current; current = other; other = tmp;
+}
+
+function toggleOff(el) {
+  var c = el.id.slice(0, 1);
+  var r = el.id.slice(1);
+  var o = (c === 'a') ? 'b' : 'a';
+  var otherEl = document.getElementById(o + r);
+  el.disabled = true;
+  otherEl.disabled = false;
+}
+
+function start(el) {
+  toggleOff(el);
+  if (flipper !== null)
+    clearTimeout(flipper);
+  current = a;
+  other = b;
+  current.pause();
+  other.pause();
+  current.currentTime = 0.0;
+  fade(current, 0, 1);
+  current.play();
+  flipper = window.setInterval(flip, 28000);
+}
+
+function stop(el) {
+  toggleOff(el);
+  if (flipper === null)
+    return;
+  clearTimeout(flipper);
+  flipper = null;
+  fade(current, 1, 0);
+}
+</script>
