@@ -1,84 +1,93 @@
 <!doctype html>
-<link rel=stylesheet type=text/css href=index.css>
-<audio id=hz7a preload=auto autobuffer>
-  <source src=hz_07_336-343.mp3 />
-  <source src=hz_07_336-343.ogg />
-</audio>
-<audio id=hz7b preload=auto autobuffer>
-  <source src=hz_07_336-343.mp3 />
-  <source src=hz_07_336-343.ogg />
-</audio>
-
 <title>Binaural Beats</title>
-<span>7Hz</span>
-<button onclick=start(this) id=a7>Start</button>
-<button onclick=stop(this) disabled id=b7>Stop</button>
+<link rel=stylesheet type=text/css href=index.css>
+<script src=binaural.js></script>
 
-<script>
-var a = document.getElementById("hz7a");
-var b = document.getElementById("hz7b");
-a.volume = 0.0;
-b.volume = 0.0;
+<!-- 4hz pulse from 200hz tone -->
+<audio id=hz-04-200-a>
+  <source src=hz_04_200.mp3 />
+  <source src=hz_04_200.ogg />
+</audio>
+<audio id=hz-04-200-b>
+  <source src=hz_04_200.mp3 />
+  <source src=hz_04_200.ogg />
+</audio>
+<!-- 4hz pulse from 300hz tone -->
+<audio id=hz-04-300-a>
+  <source src=hz_04_300.mp3 />
+  <source src=hz_04_300.ogg />
+</audio>
+<audio id=hz-04-300-b>
+  <source src=hz_04_300.mp3 />
+  <source src=hz_04_300.ogg />
+</audio>
+<!-- 4hz pulse from 400hz tone -->
+<audio id=hz-04-400-a>
+  <source src=hz_04_400.mp3 />
+  <source src=hz_04_400.ogg />
+</audio>
+<audio id=hz-04-400-b>
+  <source src=hz_04_400.mp3 />
+  <source src=hz_04_400.ogg />
+</audio>
+<!-- 4hz pulse from 200hz tone -->
+<audio id=hz-07-200-a>
+  <source src=hz_07_200.mp3 />
+  <source src=hz_07_200.ogg />
+</audio>
+<audio id=hz-07-200-b>
+  <source src=hz_07_200.mp3 />
+  <source src=hz_07_200.ogg />
+</audio>
+<!-- 4hz pulse from 300hz tone -->
+<audio id=hz-07-300-a>
+  <source src=hz_07_300.mp3 />
+  <source src=hz_07_300.ogg />
+</audio>
+<audio id=hz-07-300-b>
+  <source src=hz_07_300.mp3 />
+  <source src=hz_07_300.ogg />
+</audio>
+<!-- 4hz pulse from 400hz tone -->
+<audio id=hz-07-400-a>
+  <source src=hz_07_400.mp3 />
+  <source src=hz_07_400.ogg />
+</audio>
+<audio id=hz-07-400-b>
+  <source src=hz_07_400.mp3 />
+  <source src=hz_07_400.ogg />
+</audio>
 
-var current = a;
-var other = b;
-var flipper = null;
+<table id=buttonsTable>
+  <thead>
+    <tr>
+      <td>Beat</td>
+      <td colspan=3>Tone</td>
+  </thead>
+  <tr>
+    <td>4 Hz</td>
+    <td><button onclick=start(this) data-beat=04 data-tone=200>200</button></td>
+    <td><button onclick=start(this) data-beat=04 data-tone=300>300</button></td>
+    <td><button onclick=start(this) data-beat=04 data-tone=400>400</button></td>
+  </tr>
+  <tr>
+    <td>7 Hz</td>
+    <td><button onclick=start(this) data-beat=07 data-tone=200>200</button></td>
+    <td><button onclick=start(this) data-beat=07 data-tone=300>300</button></td>
+    <td><button onclick=start(this) data-beat=07 data-tone=400>400</button></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan=3><button onclick=stop(this) class=stop disabled>Stop</button></td>
+  </tr>
+</table>
 
-function fade(snd, from, to, ticks) {
-  var tick = 0;
-  ticks = ticks || 20;
-  var timer = null;
-  snd.volume = from;
-  function tickDown() {
-    tick += 1;
-    if (tick >= ticks)
-      clearTimeout(timer);
-    var vol = from + (to - from) * (tick / ticks);
-    snd.volume = vol;
-  }
-  timer = window.setInterval(tickDown, 1000 / ticks);
-}
+<h1>Binaural Beats</h1>
 
-function flip() {
-  other.currentTime = 0.0;
-  fade(other, 0, 1);
-  var _current = current;
-  window.setTimeout(function () {
-    fade(_current, 1, 0);
-  }, 100);
-  other.play();
-  var tmp = current; current = other; other = tmp;
-}
-
-function toggleOff(el) {
-  var c = el.id.slice(0, 1);
-  var r = el.id.slice(1);
-  var o = (c === 'a') ? 'b' : 'a';
-  var otherEl = document.getElementById(o + r);
-  el.disabled = true;
-  otherEl.disabled = false;
-}
-
-function start(el) {
-  toggleOff(el);
-  if (flipper !== null)
-    clearTimeout(flipper);
-  current = a;
-  other = b;
-  current.pause();
-  other.pause();
-  current.currentTime = 0.0;
-  fade(current, 0, 1);
-  current.play();
-  flipper = window.setInterval(flip, 28000);
-}
-
-function stop(el) {
-  toggleOff(el);
-  if (flipper === null)
-    return;
-  clearTimeout(flipper);
-  flipper = null;
-  fade(current, 1, 0);
-}
-</script>
+<span>Wikipedia on <a href=http://en.wikipedia.org/wiki/Binaural_beats>Binaural beats</a>:</span>
+<blockquote>
+  <strong>Binaural</strong> beats or binaural tones are auditory processing artifacts, or apparent sounds, the perception of which arises in the brain for specific physical stimuli. This effect was discovered in 1839 by Heinrich Wilhelm Dove, and earned greater public awareness in the late 20th century based on claims that binaural beats could help induce relaxation, meditation, creativity and other desirable mental states. The effect on the brainwaves depends on the difference in frequencies of each tone: for example, if 300 Hz was played in one ear and 310 in the other, then the binaural beat would have a frequency of 10 Hz.
+</blockquote>
+<p>
+  In addition to being a neat effect, there are <a href=http://en.wikipedia.org/wiki/Binaural_beats#Hypothetical_effects_on_brain_function>claims</a> that it can be used as a relaxation tool via <a href=http://en.wikipedia.org/wiki/Brainwave_synchronization>brainwave synchronization</a>.  The frequencies selected here, 4Hz and 7Hz, are very popular Binaural Beats because they correspond to <a href=http://en.wikipedia.org/wiki/Theta_waves>Theta waves</a>, which again are associated with relaxation and meditation.
+</p>
