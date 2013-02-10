@@ -30,27 +30,21 @@ thead {
 }
 
 td {
-    position: relative;
     width: 100px;
     height: 50px;
     background-color: #444;
 }
 
-button {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+.button {
     margin: 2px;
     cursor: pointer;
     background: #6d4;
-    border-color: #4b2;
+    border: 2px solid #4b2;
     color: #222;
 }
 
-button[disabled] {
+.button.disabled {
     background: #d64;
-    border-color: #b42;
+    border: 2px solid #b42;
     color: #222;
 }
