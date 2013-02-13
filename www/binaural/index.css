@@ -35,6 +35,10 @@ td {
     background-color: #444;
 }
 
+#slide {
+    width: 180px;
+}
+
 .button {
     margin: 2px;
     cursor: pointer;

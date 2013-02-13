@@ -32,6 +32,13 @@ function stop(el) {
   currentSound.pause();
 }
 
+function updateVolume(level) {
+  var volume = level * 0.01;
+  var audios = document.getElementsByTagName("audio");
+  for (var i=0; i < audios.length; i++)
+    audios[i].volume = volume;
+}
+
 function flip() {
   nextSound.currentTime = 0.0;
   var _currentSound = currentSound;
