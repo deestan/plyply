@@ -83,10 +83,12 @@
   <tr>
     <td>Volume</td>
     <td colspan=3 id=slider>
-      0% <input id=slide type=range min=0 max=100 step=1 value=100 onchange=updateVolume(this.value) /> 100%
+      0% <input id=slide type=range min=0 max=100 step=1 value=10 onchange=updateVolume(this.value) /> 100%
     </td>
   </tr>
 </table>
+
+<script>updateVolume(document.getElementById("slide").value);</script>
 
 <h1>Binaural Beats</h1>
 
