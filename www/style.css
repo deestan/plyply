@@ -38,6 +38,7 @@ header {
 
 .me {
     margin: 0 auto;
+    display: -webkit-flex;
     display: flex;
     align-items: center;
 }
@@ -47,12 +48,14 @@ header {
     color: BurlyWood;
     font-weight: normal;
     font-size: 34px;
+    -webkit-order: 2;
     order: 2;
 }
 
 .me img {
     width: 50px;
     margin-right: 10px;
+    -webkit-order: 1;
     order: 1;
 }
 
