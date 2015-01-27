@@ -1,24 +1,67 @@
 body {
- font-family: verdana;
- width: 600px;
- margin-left: auto;
- margin-right: auto;
- background-color: #222;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #222;
 }
 
-a {
-  color: #ffd700;
-  text-decoration: none;
-  padding: 20px;
-  background: #442700;
-  border: 2px solid #ffd700;
-  margin: 5px;
-  display: block;
-  font-size: 25px;
-  text-align: center;
+h1 {
+    margin: 0;
 }
 
-a:hover {
-  color: #ffee90;
-  text-decoration: underline;
+header {
+    background-color: #333;
+    padding: 20px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.me {
+    width: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.me h1 {
+    display: inline;
+    color: BurlyWood;
+    font-weight: normal;
+    font-size: 34px;
+    order: 2;
+}
+
+.me img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    order: 1;
+}
+
+.projects {
+    list-style: none;
+    padding: 0;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.projects li {
+    margin-bottom: 5px;
+    font-size: 25px;
+}
+
+.projects li a {
+    color: Tan;
+    display: block;
+    text-decoration: none;
+    padding: 20px;
+    background: SaddleBrown;
+    border: 2px solid Tan;
+    text-align: center;
+}
+
+.projects li a:hover {
+    background: Chocolate;
+    text-decoration: underline;
 }
