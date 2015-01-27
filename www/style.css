@@ -15,7 +15,7 @@ ul {
     margin-top: 0;
 }
 
-/* header */
+/* layout */
 
 header {
     background-color: #333;
@@ -23,8 +23,20 @@ header {
     display: block;
 }
 
+@media screen and (min-width: 650px) {
+    header {
+        margin-bottom: 10px;
+    }
+
+    .inner {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+/* modules */
+
 .me {
-    width: 600px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -43,8 +55,6 @@ header {
     margin-right: 10px;
     order: 1;
 }
-
-/* content */
 
 .projects {
     list-style: none;
@@ -67,6 +77,16 @@ header {
 
 .projects li:first-of-type a {
     border-top: 2px solid Tan;
+}
+
+@media screen and (min-width: 650px) {
+    .projects li {
+        margin-bottom: 5px;
+    }
+
+    .projects li a {
+        border: 2px solid Tan;
+    }
 }
 
 .projects li a:hover {
