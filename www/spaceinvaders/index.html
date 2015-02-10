@@ -1,89 +1,56 @@
 <!doctype html>
+<link rel=stylesheet type=text/css href=/style.css>
 <link rel=stylesheet type=text/css href=index.css>
+<script src=gallery.js></script>
+
 <title>Space Invaders for Windows</title>
-<h1>Space Invaders for Windows</h1>
-<div id=gallery>
- <div class=strip>
-  <img src=main.png title="Main menu">
-  <img src=lategame.png title="Halfway through">
-  <img src=pewpew.png title="Pewpew mode!">
-  <img src=epicbattle.png title="Classic struggle">
-  <img src=boss.png title="Boss descending from above">
- </div>
-</div>
-<div class=downloadContainer>
- <a class=download href=spaceinvaders-setup.msi>Download Installer</a>
- <span class=hint>(16Mb .msi)</span>
-</div>
-<h2>Description</h2>
-<iframe class=gameplayVideo width="420" height="315" src="http://www.youtube.com/embed/GM9uuv-dhIk?rel=0" frameborder="0" allowfullscreen></iframe>
-<p>Funky remake of the classic Space Invaders game, powered by Unity 3D Game Engine.</p>
-<p>Features beautiful music from <a class=rko href=http://remix.kwed.org>Remix.Kwed.Org</a>, pretty special effects, a boss fight, and a special PewPew gamemode which makes the game suitable and fun for younger children.</p>
-<p>Requires a fairly modern computer to run.</p>
 
-<script type=text/javascript>
-var imgPos = [];
-var stripE = document.getElementById("gallery").getElementsByClassName("strip")[0];
-function initGallery() {
- var gal = document.getElementById("gallery");
- var gDim = gal.getBoundingClientRect();
- var w = gDim.width;
- var h = gDim.height;
- var imgs = stripE.getElementsByTagName("img");
- stripE.style.setProperty("height", h+"px", "");
- stripE.style.setProperty("width", (w*imgs.length)+"px", "");
- for (var i=0; i<imgs.length; i++) {
-  imgPos.push(-i*w);
-  imgs[i].style.setProperty("position", "absolute", "");
-  imgs[i].style.setProperty("left", (i*w)+"px", "");
-  imgs[i].style.setProperty("width", w+"px", "");
-  imgs[i].style.setProperty("height", h+"px", "");
- }
-};
+<header>
+  <div class="inner">
+    <div class="me">
+      <h1>Shit and stuff by Helge Holm</h1>
+      <img src="/helge.jpg">
+    </div>
+  </div>
+</header>
+
+<div class="shit description">
+  <div class="inner">
+    <h1>Space Invaders for Windows</h1>
+    
+    <div class="intro">
+      <p>Funky remake of the classic Space Invaders game, powered by Unity 3D Game Engine.</p>
+      <p>Features beautiful music from <a class=rko href=http://remix.kwed.org>Remix.Kwed.Org</a>, pretty special effects, a boss fight, and a special PewPew gamemode which makes the game suitable and fun for younger children.</p>
+      <p>Requires a fairly modern computer to run.</p>
+    </div>
+
+    <div class="description-screenshots">
+      <div class="gallery">
+        <div class="strip">
+          <img src="main.png" title="Main menu">
+          <img src="lategame.png" title="Halfway through">
+          <img src="pewpew.png" title="Pewpew mode!">
+          <img src="epicbattle.png" title="Classic struggle">
+          <img src="boss.png" title="Boss descending from above">
+        </div>
+      </div>
+    </div>
+
+    <div class="download-container">
+      <a class="download" href="spaceinvaders-setup.msi">Download Installer</a>
+      <span class="hint">(16Mb .msi)</span>
+    </div>
+  </div>
+</div>
+
+<div class="shit tech">
+  <div class="inner">
+    <h1>Moer words</h1>
+    <iframe class=gameplayVideo width="420" height="315" src="http://www.youtube.com/embed/GM9uuv-dhIk?rel=0" frameborder="0" allowfullscreen></iframe>
+    Made with programming and things.
+  </div>
+</div>
+
+<script>
 initGallery();
-var transition = (function() {
- var transitioning = false;
- return function(fromIdx, toIdx, callback) {
-  if (transitioning) return;
-  transitioning = true;
-  var from = imgPos[fromIdx];
-  var to = imgPos[toIdx];
-  var step = 0;
-  var STEPS = 50;
-  function move() {
-   if (step == STEPS) {
-    stripE.style.setProperty("left", to+"px", "");
-    if (callback) callback();
-    transitioning = false;
-   } else {
-    var pos = step / STEPS;
-    var smoothPos = (1 - Math.cos(pos * Math.PI)) / 2;
-    var left = from + (to - from) * smoothPos;
-    ++step;
-    stripE.style.setProperty("left", left+"px", "");
-    setTimeout(move, 20);
-   }
-  }
-  move();
- }
-})();
-var cycler = (function() {
- var atIdx = 0;
- var autoCycling = false;
- var interval;
- function goNext() {
-  var nxtIdx = atIdx + 1;
-  if (nxtIdx >= imgPos.length) nxtIdx = 0;
-  transition(atIdx, nxtIdx);
-  atIdx = nxtIdx;
- }
- function start() {
-  interval = setInterval(goNext, 8000);
- }
- function stop() {
-  clearInterval(interval);
- }
- start();
-})();
-
 </script>
