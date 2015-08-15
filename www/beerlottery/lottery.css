@@ -1,8 +1,7 @@
 body {
     margin: 0;
     padding: 4px;
-    background: #2b3741;
-    background-image: url(stackofbriks.png);
+    background: #3b4751;
     background-repeat: repeat;
     font-family: monospace;
 }
@@ -98,7 +97,7 @@ body {
 
 #players {
     width: 250px;
-    background: #988072;
+    background: #a89082;
 }
 
 #players[contenteditable=true] {
@@ -108,14 +107,14 @@ body {
 .action {
     cursor: pointer;
     font-size: 16px;
-    background: #6d4;
-    border-color: #4b2;
+    background: #86ed54;
+    border-color: #56bd34;
     color: #222;
 }
 
 button[disabled] {
-    background: #d64;
-    border-color: #b42;
+    background: #ed8046;
+    border-color: #bd3036;
     color: #222;
 }
 
@@ -134,7 +133,7 @@ span.nametag {
     width: 100%;
     height: 0px;
     position: relative;
-    background: #818d01;
+    background: #91ad41;
     overflow: hidden;
 }
 
