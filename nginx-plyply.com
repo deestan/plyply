@@ -21,4 +21,8 @@ server {
   server_name plyply.com test.plyply.com;
   root /var/www-plyply/;
   index index.html;
+
+  location /cv/ {
+    proxy_pass http://localhost:8082;
+  }
 }
