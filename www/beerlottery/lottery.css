@@ -107,15 +107,26 @@ body {
 .action {
     cursor: pointer;
     font-size: 16px;
-    background: #86ed54;
-    border-color: #56bd34;
+    background: #c1dd51;
+    border-color: #91ad41;
     color: #222;
+    transition: 0.3s;
+}
+
+.action:hover {
+    background: #e1ed51;
 }
 
 button[disabled] {
-    background: #ed8046;
-    border-color: #bd3036;
-    color: #222;
+    background: #a7a7a7;
+    border-color: #889;
+    color: #d0d0d0;
+    cursor: default;
+}
+
+button[disabled]:hover {
+    background: #878787;
+    color: #909090;
 }
 
 img.runner, span.nametag {
