@@ -23,6 +23,6 @@ server {
   index index.html;
 
   location /cv/ {
-    proxy_pass http://localhost:8082;
+    proxy_pass http://localhost:8082/;
   }
 }
