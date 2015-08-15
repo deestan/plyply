@@ -114,7 +114,8 @@ body {
 }
 
 .action:hover {
-    background: #e1ed51;
+    background: #d8fd71;
+    border-color: #819d37;
 }
 
 button[disabled] {
@@ -126,6 +127,7 @@ button[disabled] {
 
 button[disabled]:hover {
     background: #878787;
+    border-color: #777777;
     color: #909090;
 }
 
