@@ -1,0 +1,30 @@
+body {
+    color: #cacbc9;
+}
+
+a {
+    color: #cacb60;
+}
+
+a:hover {
+    color: #fff;
+}
+
+.description-screenshots {
+    float: right;
+}
+
+.gallery {
+    height: 200px;
+    width: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+.strip {
+    position: absolute;
+}
+
+.shit {
+    margin-bottom: 20px;
+}
